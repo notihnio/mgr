@@ -1,5 +1,15 @@
 <?php
 
+/**
+    @author Panagiotis Mastrandrikos <pmstrandrikos@gmail.com>  https://github.com/notihnio
+ 
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+ 
+ */
+
 namespace Mgr\Core;
 
 /**
@@ -57,7 +67,7 @@ class Core {
             \Mgr\Event\Event::trigger("router.preDispach");
             $this->selectedRoute = $router->dispach();
             \Mgr\Event\Event::trigger("router.postDispach", $this->selectedRoute);
-            
+           
             //create selected route namespace
             $selectedRouteNamespace = "\Application\Module\\".ucfirst($this->selectedRoute["module"]);
             $controllerName = $selectedRouteNamespace."\Controller\\".ucfirst($this->selectedRoute["controller"])."Controller"; 
@@ -65,10 +75,12 @@ class Core {
             
             //init selected controller
             $controller = new $controllerName($selectedRouteNamespace);
-            $controller->viewFolderPath = ROOT.str_replace("\\", DIRECTORY_SEPARATOR, $selectedRouteNamespace).DIRECTORY_SEPARATOR."View";
+            $controller->viewFolderPath = ROOT.str_replace("\\", DIRECTORY_SEPARATOR, $selectedRouteNamespace).DIRECTORY_SEPARATOR."View".DIRECTORY_SEPARATOR.ucfirst($this->selectedRoute["controller"]);
             $controller->selectedRoute = $this->selectedRoute;
             $controller->view = new \Mgr\View\View($controller->viewFolderPath.DIRECTORY_SEPARATOR.ucfirst($this->selectedRoute["action"]));
-                    
+            $controller->getParams = $_GET;
+            $controller->postParams = $_POST;
+            $controller->params = isset( $this->selectedRoute["params"])? $this->selectedRoute["params"]: array();
             //fire The selected action
             $selectedAction = ucfirst($this->selectedRoute["action"])."Action";
             $controller->$selectedAction();
