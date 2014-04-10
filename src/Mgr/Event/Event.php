@@ -27,9 +27,10 @@ class Event {
     public static $events = array();
 
     /**
-     * 
+     * @name trigger
+     * @description triggers an event
      * @param string $event the name of the event
-     * @param type $args
+     * @param array $args the event passing arguments
      */
     public static function trigger($event, $args = array()) {
         if (isset(self::$events[$event])) {
@@ -39,6 +40,12 @@ class Event {
         }
     }
 
+     /**
+     * @name bind
+     * @description binds an event
+     * @param string $event the name of the event
+     * @param type $callback the callback function
+     */
     public static function bind($event, \Closure $callback) {
         self::$events[$event][] = $callback;
     }
