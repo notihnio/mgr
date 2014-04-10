@@ -2,16 +2,45 @@
 
 namespace Mgr\Router;
 
+/**
+ * @class Router
+ * @Description Implements the Routing logic for access MVC
+ */
 class Router {
 
+    /**
+     *
+     * @var string the requested url
+     */
     private $requestedPath;
+
+    /**
+     *
+     * @var array the routes configuration
+     */
     private $routes = array();
+
+    /**
+     *
+     * @var array the system configuration
+     */
     private $configuration;
 
-    public function __construct($routes) {
-        $this->configuration = \Application\Config\Configurator::config();
+    /**
+     * 
+     * @param array $routes 
+     * @param array $configuration
+     */
+    public function __construct($routes, $configuration) {
+        if(!isset($routes))
+            throw new \Mgr\Exception\Router("You new to specify a Routes array! If you use the default router please provide an empty array");
+
+        if(!isset($configuration))
+             throw new \Mgr\Exception\Router("You new to specify a configuration array. Else please provide an empty array ");
+
+        $this->configuration = $configuration;
         $this->requestedPath = $_SERVER["REQUEST_URI"];
-        $this->routes = \Application\Config\Routes::routes();
+        $this->routes = $routes;
     }
 
     /**
@@ -128,25 +157,25 @@ class Router {
                     //check if requested uri regex starts with the router regex
                     if (preg_match("/^" . str_replace("/", "\\/", trim($routerRegex, "/*")) . ".*/", $requestedPathRegex)) {
 
-                     
+
                         return array(
                             "module" => $route["module"],
                             "controller" => $route["controller"],
                             "action" => $route["action"],
-                            "params" => $this->getNormalRouterParams($requestedPathRegex, $routerRegex, $route)    
+                            "params" => $this->getNormalRouterParams($requestedPathRegex, $routerRegex, $route)
                         );
                     }
                 }
 
                 //if there is no /* route check if requested url regex is the same with the router regex
-                else { 
+                else {
                     //check if requestd uri regex starts with the router regex
                     if ($routerRegex == $requestedPathRegex) {
-                           return array(
+                        return array(
                             "module" => $route["module"],
                             "controller" => $route["controller"],
                             "action" => $route["action"],
-                            "params" => $this->getNormalRouterParams($requestedPathRegex, $routerRegex, $route)    
+                            "params" => $this->getNormalRouterParams($requestedPathRegex, $routerRegex, $route)
                         );
                     }
                 }
@@ -178,37 +207,39 @@ class Router {
         return $params;
     }
 
+    /**
+     * 
+     * @param string $requestedPathRegex - the requested path regex
+     * @param type $routerRegex the router regex
+     * @param type $route the array with rout configuration
+     * @return array Controller Module Action and url params
+     */
     public function getNormalRouterParams($requestedPathRegex, $routerRegex, $route) {
-          //get static part of route  /article/:article_id => /article/
-          $staticPartOfTheRoute = preg_replace("/:.{0,}/", "", $route["route"]);
-        
-          // explode url at / to get params
-          $urlParamsValues = explode("/",rtrim(preg_replace("/".str_replace("/", "\\/",$staticPartOfTheRoute)."/", "", $this->requestedPath, 1),"/"));
-          
-           // explode url at / to get the map of params ex. :paramName from route or the /* params
-          $routeParams = explode("/",preg_replace("/".str_replace("/", "\\/",$staticPartOfTheRoute)."/", "", $route["route"], 1));
-          
-          //stores the exported parameters
-          $params = array();
-                  
-          //for each route param
-          for($counter=0; $counter<count($routeParams);$counter++){
-              if(preg_match("/:[a-zA-Z0-9_\-]{0,}/",$routeParams[$counter] )){
-                  $params[preg_replace("/:/", "", $routeParams[$counter])] = $urlParamsValues["$counter"];
-                  unset($urlParamsValues[$counter]);
-                  
-              }
-              
-              if($routeParams[$counter] =="*"){
-                  $defaultRouterParams = $this->getDefaultRouterURIParams(array_values($urlParamsValues));
-                   return array_merge($params,$defaultRouterParams);
-              }
-          }
-          return $params;
-          
-         
-       
-         
+        //get static part of route  /article/:article_id => /article/
+        $staticPartOfTheRoute = preg_replace("/:.{0,}/", "", $route["route"]);
+
+        // explode url at / to get params
+        $urlParamsValues = explode("/", rtrim(preg_replace("/" . str_replace("/", "\\/", $staticPartOfTheRoute) . "/", "", $this->requestedPath, 1), "/"));
+
+        // explode url at / to get the map of params ex. :paramName from route or the /* params
+        $routeParams = explode("/", preg_replace("/" . str_replace("/", "\\/", $staticPartOfTheRoute) . "/", "", $route["route"], 1));
+
+        //stores the exported parameters
+        $params = array();
+
+        //for each route param
+        for ($counter = 0; $counter < count($routeParams); $counter++) {
+            if (preg_match("/:[a-zA-Z0-9_\-]{0,}/", $routeParams[$counter])) {
+                $params[preg_replace("/:/", "", $routeParams[$counter])] = $urlParamsValues["$counter"];
+                unset($urlParamsValues[$counter]);
+            }
+
+            if ($routeParams[$counter] == "*") {
+                $defaultRouterParams = $this->getDefaultRouterURIParams(array_values($urlParamsValues));
+                return array_merge($params, $defaultRouterParams);
+            }
+        }
+        return $params;
     }
 
     public function dispach() {

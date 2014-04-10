@@ -20,13 +20,42 @@ class Core {
      */
     private $configuration;
     
+    
+    /**
+     *
+     * @type Array
+     * @name routes 
+     * @description RouterRoutes;
+     */
+    private $routes;
+    
+    
+    
     function __construct() {
         $this->configuration = \Application\Config\Configurator::config();
+        $this->routes = \Application\Config\Routes::routes();
     }
     
     
     function dispach(){
-        $router = new \Mgr\Router\Router(\Application\Config\Routes::routes());
-        die(var_dump($router->dispach()));
+        try{
+            
+            //init Router
+            $router = new \Mgr\Router\Router($this->routes, $this->configuration);
+            
+            \Mgr\Event\Event::trigger("router.preDispach");
+            $routeParams = $router->dispach();
+            \Mgr\Event\Event::trigger("router.postDispach", $routeParams);
+            
+            
+        }catch (\Exception $error){
+            $error->getMessage();
+            
+        }catch (\Mgr\Exception\Route $error){
+            $error->getMessage();
+            
+        }
+        
+  
     }
 }
