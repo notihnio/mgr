@@ -15,8 +15,8 @@ class Controller {
 
     public function __destruct() {
 
-        if (isset($this->layout->Name)) {
-            $this->layout->layoutFilePath = dirname($this->viewFolderPath).DIRECTORY_SEPARATOR."Layout".DIRECTORY_SEPARATOR.ucfirst($this->layout->Name);
+        if (isset($this->layout->__Name)) {
+            $this->layout->__layoutFilePath = dirname($this->viewFolderPath).DIRECTORY_SEPARATOR."Layout".DIRECTORY_SEPARATOR.ucfirst($this->layout->__Name);
             $this->layout->content = $this->view->render();
             $this->layout->render();
         } else {

@@ -4,7 +4,7 @@ namespace Mgr\Layout;
 
 class Layout {
    
-    public $layoutFilePath;
+    public $__layoutFilePath;
     
 
 
@@ -13,7 +13,7 @@ class Layout {
     }
     
     public function render(){
-        require_once $this->layoutFilePath.".php";
+        require_once $this->__layoutFilePath.".php";
     }
         
 }
