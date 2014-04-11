@@ -1,12 +1,17 @@
 {
     "name": "notihnio/mgr",
-    "description": "Mgr is an open source light framework.",
+    "type": "MVC Framework",
+    "keywords": ["php","mvc", "framework, greece, megara, notihnio, notis, mastrandrikos, light, lightweight"],
+    "description": "Mgr is an open source light PHP Framwork framework.",
     "authors": [
         {
             "name": "Panagiotis (Notis) Mastrandrikos",
-            "email": "pmastranrdikos@gmail.com"
+            "email": "pmastranrdikos@gmail.com",
+            "homepage": "https://github.com/notihnio",
+            "role": "Developer"
         }
     ],
+    "license": "GNU/GPLv3",
     "minimum-stability": "dev",
     "require": {
         "php": ">=5.3.0"
