@@ -1,7 +1,7 @@
 {
     "name": "notihnio/mgr",
-    "type": "MVC Framework",
-    "keywords": ["php","mvc", "framework, greece, megara, notihnio, notis, mastrandrikos, light, lightweight"],
+    "type": "MVC-Framework",
+    "keywords": ["php","mvc", "framework", "greece", "megara", "notihnio", "notis", "mastrandrikos", "light", "lightweight"],
     "description": "Mgr is an open source light PHP Framwork framework.",
     "authors": [
         {
