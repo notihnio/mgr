@@ -5,7 +5,7 @@ Mgr framework is lightway MVC PHP Framework and included basic and commonly used
 
 You can get it with composer  
 
-<b><h3>php composer.phar install notihnio/mgr</h3> </b>
+https://packagist.org/packages/notihnio/mgr
 
 
 
