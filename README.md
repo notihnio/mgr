@@ -9,5 +9,10 @@ php composer.phar install notihnio/mgr
 
 Exlore the documentation
 
+https://github.com/notihnio/mgr/wiki
+
+
+
+
 
 
