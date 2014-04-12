@@ -7,10 +7,18 @@ You can get it with composer
 php composer.phar install notihnio/mgr
 
 
+
+
 Exlore the documentation
 
 https://github.com/notihnio/mgr/wiki
 
+
+
+Example code
+
+clone the example application
+https://github.com/notihnio/mgr-example-application
 
 
 
