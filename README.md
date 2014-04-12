@@ -1,4 +1,4 @@
-mgr
+mgr MVC PHP Framework
 ===
 Mgr framework is lightway MVC PHP Framework and included basic and commonly used components.
 
