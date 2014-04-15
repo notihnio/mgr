@@ -10,7 +10,7 @@ https://packagist.org/packages/notihnio/mgr
 
 
 
-Exlore the documentation
+Explore the documentation
 
 https://github.com/notihnio/mgr/wiki
 
