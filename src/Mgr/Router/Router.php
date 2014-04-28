@@ -170,9 +170,9 @@ class Router {
 
 
                         return array(
-                            "module" => $route["module"],
-                            "controller" => $route["controller"],
-                            "action" => $route["action"],
+                            "module" => strtolower($route["module"]),
+                            "controller" => strtolower($route["controller"]),
+                            "action" => strtolower($route["action"]),
                             "params" => $this->getNormalRouterParams($requestedPathRegex, $routerRegex, $route)
                         );
                     }
@@ -183,9 +183,9 @@ class Router {
                     //check if requestd uri regex starts with the router regex
                     if ($routerRegex == $requestedPathRegex) {
                         return array(
-                            "module" => $route["module"],
-                            "controller" => $route["controller"],
-                            "action" => $route["action"],
+                            "module" => strtolower($route["module"]),
+                            "controller" => strtolower($route["controller"]),
+                            "action" => strtolower($route["action"]),
                             "params" => $this->getNormalRouterParams($requestedPathRegex, $routerRegex, $route)
                         );
                     }
