@@ -12,10 +12,10 @@
 namespace Mgr\Exception;
 
 /**
- * @class  Mgr\Exception\Router
- * @Description Handles Route exception
+ * @class  Mgr\Exception\Session
+ * @Description Handles Session handler exception
  */
-class Router extends \Exception {
+class Session extends \Exception {
 
     // Redefine the exception so message isn't optional
     public function __construct($message, $code = 0, Exception $previous = null) {
