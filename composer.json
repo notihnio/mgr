@@ -11,6 +11,7 @@
             "role": "Developer"
         }
     ],
+    "minimum-stability": "stable",
     "license": "GNU-GPLv3",
     "require": {
         "php": ">=5.3.0"
