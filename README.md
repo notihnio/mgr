@@ -1,6 +1,6 @@
 mgr MVC PHP Framework
 ===
-Mgr framework is lightweight MVC PHP Framework which includes basic and commonly used components.
+Mgr framework is a lightweight MVC PHP Framework which includes basic and commonly used components.
 
 
 You can get it with composer  
