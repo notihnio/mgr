@@ -160,13 +160,16 @@ class Router {
 
                 //replace all variables ("/:variableName") from router routes with - and trim first and last slash so the form of the route no is article/- article/-/- etc
                 $routerRegex = trim(preg_replace("/\/:[a-zA-Z0-9_-]{0,}/", "/-", $route["route"]), "/");
-
-
+                
+                //exlode  category/post/-/* to /category/post
+                $routerRegexParts = explode("/-", $routerRegex);
+                $routerRegexStaticPart = "/".$routerRegexParts[0];
+             
                 //check if root regex ends with star so other params can be used at the end of th URL
                 if (preg_match("/\*$/", $routerRegex)) {
 
                     //check if requested uri regex starts with the router regex
-                    if (preg_match("/^" . str_replace("/", "\\/", trim($routerRegex, "/*")) . ".*/", $requestedPathRegex)) {
+                    if (preg_match("/^" . str_replace("/", "\\/", rtrim($routerRegexStaticPart, "/*")) . ".*/", $this->requestedPath)) {
 
 
                         return array(
@@ -181,7 +184,7 @@ class Router {
                 //if there is no /* route check if requested url regex is the same with the router regex
                 else {
                     //check if requestd uri regex starts with the router regex
-                    if ($routerRegex == $requestedPathRegex) {
+                     if (preg_match("/^" . str_replace("/", "\\/", rtrim($routerRegexStaticPart, "/*")) . ".*/", $this->requestedPath)) {
                         return array(
                             "module" => strtolower($route["module"]),
                             "controller" => strtolower($route["controller"]),
