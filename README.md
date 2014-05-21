@@ -26,4 +26,4 @@ https://github.com/notihnio/mgr-example-application
 
 
 
-<b>What's new:</b> version 1.3.0 normal routing supports deeper paths for startic part example /article/edit/:articleid
+<b>What's new:</b> version 1.3.0 normal routing supports deeper paths for startc part example <i>/article/edit/:articleid</i>
