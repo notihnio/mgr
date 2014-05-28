@@ -28,5 +28,6 @@ https://github.com/notihnio/mgr-example-application
 
 
 <b>What's new:</b> 
+
 version <b>1.4.0</b> adding support to Memcache and APC cache <br>
 version <b>1.3.0</b> normal routing supports deeper paths for static part! example: <i>/article/edit/:articleid</i>
