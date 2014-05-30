@@ -62,7 +62,11 @@ class Router {
         $defaultModule = (isset($this->configuration["defaults"]["module"])) ? $this->configuration["defaults"]["module"] : "index";
         $defaultController = (isset($this->configuration["defaults"]["controller"])) ? $this->configuration["defaults"]["controller"] : "index";
         $defaultAction = (isset($this->configuration["defaults"]["action"])) ? $this->configuration["defaults"]["action"] : "index";
-
+        
+        //check for get parameters
+        $requestedPathExpodes = explode("?", $this->requestedPath);
+        $this->requestedPath = $requestedPathExpodes[0];
+        
         //if is / then return defaults
         if ($this->requestedPath == "/")
             return array(
@@ -149,9 +153,13 @@ class Router {
         if (count($this->routes) <= 0)
             return false;
 
+        //check for get parameters
+        $requestedPathExpodes = explode("?", $this->requestedPath);
+        $this->requestedPath = $requestedPathExpodes[0];
+        
         // /article/3 to article/-  
         $requestedPathRegex = preg_replace("/\/[a-zA-Z0-9_-]{0,}/", "/-", trim($this->requestedPath, "/"));
-
+         
         foreach ($this->routes as $route) {
 
 
