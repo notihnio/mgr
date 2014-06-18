@@ -38,12 +38,12 @@ class Cache implements \Mgr\Cache\CacheInterface{
 
 
     
-    public function __construct($type, $ttl) {
-        if(!in_array($type, array("File", "Apc", "Memcache")))
+    public function __construct($type, $ttl, $host=null, $port=null) {
+        if(!in_array($type, array("XCache", "Apc", "Memcache")))
             throw new \Mgr\Exception\Cache("The specified cache {$type} does not supported! The suported cache types are: Apc, Mecache and File");
         $cacheClass= "\\Mgr\\Cache\\{$type}";   
         $this->ttl = $ttl;
-        $this->cache = new $cacheClass($this->ttl);        
+        $this->cache = new $cacheClass($this->ttl, $host, $port);        
     }
     
     /**
@@ -53,7 +53,9 @@ class Cache implements \Mgr\Cache\CacheInterface{
      * @param string $key cache label
      * @return mixed
      */
-    public function get($key){}
+    public function get($key){
+        return $this->cache->get($key);
+    }
     
     
     /**

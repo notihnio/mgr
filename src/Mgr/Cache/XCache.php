@@ -12,11 +12,11 @@
 namespace Mgr\Cache;
 
 /**
- * @name Apc 
- * @description Handles Apc Caching
+ * @name XCache 
+ * @description Handles XCache Caching
  * 
  */
-class Apc Implements \Mgr\Cache\CacheInterface{
+class XCache Implements \Mgr\Cache\CacheInterface{
     
     /**
      *
@@ -39,7 +39,7 @@ class Apc Implements \Mgr\Cache\CacheInterface{
      * @return bool
      */
     public function set($key, $value){
-        return apc_store($key, $value, $this->ttl);
+        return xcache_set($key, $value, $this->ttl);
     }
     
      /**
@@ -50,7 +50,7 @@ class Apc Implements \Mgr\Cache\CacheInterface{
      * @return mixed
      */
     public function get($key){
-        return apc_fetch($key);
+        return xcache_get($key);
     }
     
     /**
@@ -61,7 +61,7 @@ class Apc Implements \Mgr\Cache\CacheInterface{
      * @return bool
      */
     public function delete($key){
-        return apc_delete($key);
+        return xcache_unset($key);
     }
     
     
@@ -73,6 +73,6 @@ class Apc Implements \Mgr\Cache\CacheInterface{
      * @return bool
      */
     public function exists($key){
-        return apc_exists($key);
+        return xcache_isset($key);
     }
 }
