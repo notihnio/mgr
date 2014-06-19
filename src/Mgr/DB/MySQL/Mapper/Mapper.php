@@ -21,8 +21,9 @@ class Mapper {
 
     public $pdo;
 
-    public function __construct($pdo, $lock = false) {
+    public function __construct(\Mgr\DB\PDO\MgrPDO $pdo, $lock = false) {
         $this->pdo = $pdo;
+        die(var_dump($this->getTableExistingColums(end(explode('\\', get_called_class())))));
         if (!$lock) {
             //extract table name from class Schema!
             $tableName = end(explode('\\', get_called_class()));
@@ -32,10 +33,13 @@ class Mapper {
 
     public function updateStructure($tableName) {
 
+        //try to get  existing table colums
+        $existingTableStructure = $this->getTableExistingColums($tableName);
+
+
         //get ORM object proerties exept pdo
         $properties = get_object_vars($this);
         unset($properties["pdo"]);
-        die(var_dump($tableName));
 
 
         $slq = "      
@@ -63,8 +67,37 @@ class Mapper {
                ";
     }
 
+    /**
+     * @name getTableExistingColums
+     * @description returns table existing colums
+     * 
+     * @param string $tableName - the table name
+     * @return array existingColums
+     */
+    private function getTableExistingColums($tableName) {
+        try {
+            $sql = " 
+            SELECT
+               *
+            FROM
+               INFORMATION_SCHEMA.COLUMNS
+            WHERE 
+              TABLE_NAME LIKE :table
+              AND table_schema = :databaseName";
+
+            $statement = $this->pdo->prepare($sql);
+            $statement->bindParam(':table', $tableName, \Mgr\DB\PDO\MgrPDO::PARAM_STR, 150);
+            $statement->bindParam(':databaseName', $this->pdo->getDbName(), \Mgr\DB\PDO\MgrPDO::PARAM_STR, 150);
+            $statement->execute();
+
+            $result = $statement->fetchAll();
+            return $result;
+        } catch (PDOException $Exception) {
+            throw new MyDatabaseException($Exception->getMessage(), $Exception->getCode());
+        }
+    }
+
     private function convertPropertiesToSql($properties) {
-         
         
     }
 
