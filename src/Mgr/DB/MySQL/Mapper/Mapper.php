@@ -28,9 +28,11 @@ class Mapper {
     public $pdo;
     public $___recursive;
     public $___deleteColumns;
+    public $___lock;
 
     public function __construct(\Mgr\DB\PDO\MgrPDO $pdo, $lock = true, $recursive = false, $allowDeleteColums=false) {
         $this->pdo = $pdo;
+        $this->___lock = $lock;
         $this->___recursive = $recursive;
         $this->___deleteColumns = $allowDeleteColums;
 
@@ -74,7 +76,7 @@ class Mapper {
             $result = $statement->fetchAll();
             return $result;
         } catch (PDOException $Exception) {
-            throw new MyDatabaseException($Exception->getMessage(), $Exception->getCode());
+           die($Exception->getMessage());
         }
     }
 
@@ -105,7 +107,7 @@ class Mapper {
             $result = $statement->fetchAll();
             return $result;
         } catch (PDOException $Exception) {
-            throw new MyDatabaseException($Exception->getMessage(), $Exception->getCode());
+              die($Exception->getMessage());
         }
     }
 
@@ -134,7 +136,7 @@ class Mapper {
             $result = $statement->fetchAll();
             return $result;
         } catch (PDOException $Exception) {
-            throw new MyDatabaseException($Exception->getMessage(), $Exception->getCode());
+              die($Exception->getMessage());
         }
     }
 
@@ -147,6 +149,7 @@ class Mapper {
     private function getProperties() {
         $properties = get_object_vars($this);
         unset($properties["pdo"]);
+         unset($properties["___lock"]);
         unset($properties["___recursive"]);
         unset($properties["___deleteColumns"]);
         
@@ -184,13 +187,13 @@ class Mapper {
 
         //get ORM object properties exept pdo
         $sql = preg_replace("/,\s+\)/", " ) ", $sql);
-
+        
         try {
             $statement = $this->pdo->prepare($sql);
             $statement->execute();
             return true;
         } catch (PDOException $Exception) {
-            throw new MyDatabaseException($Exception->getMessage(), $Exception->getCode());
+              die($Exception->getMessage());
             return false;
         }
     }
@@ -277,7 +280,7 @@ class Mapper {
             $statement->execute();
             return true;
         } catch (PDOException $Exception) {
-            throw new MyDatabaseException($Exception->getMessage(), $Exception->getCode());
+              die($Exception->getMessage());
             return false;
         }
     }
@@ -334,8 +337,8 @@ class Mapper {
             $foreignKeyOnDeleteOnUpdate = trim($explode[2]);
 
 
-            //get the reference table name and execute update stracture if ___recursive allowed
-            $referenceClass = new $foreignKeyClassName($this->pdo, ($this->___recursive) ? false : true);
+            //get the reference table name and execute update structure if ___recursive allowed
+            $referenceClass = new $foreignKeyClassName($this->pdo, $this->___lock, $this->___recursive, $this->___deleteColumns);
 
 
             $returnScript["constraitsBuffer"] = "INDEX({$name}), FOREIGN KEY({$name}) REFERENCES {$referenceClass->getTableName()}({$foreignKeyClassField}) {$foreignKeyOnDeleteOnUpdate}, ";
@@ -386,7 +389,7 @@ class Mapper {
 
             return true;
         } catch (PDOException $Exception) {
-            throw new MyDatabaseException($Exception->getMessage(), $Exception->getCode());
+            die($Exception->getMessage());
             return false;
         }
     }
