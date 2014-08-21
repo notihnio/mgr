@@ -39,6 +39,7 @@ class Session {
     public function __construct($namespace) {
         $this->namespace=$namespace;
         session_name($this->namespace);
+        ob_start();
         if (!session_start()) 
             throw new \Mgr\Exception\Session("Session did not initialized");
     }
