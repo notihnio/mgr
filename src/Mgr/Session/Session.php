@@ -12,8 +12,6 @@
 
 namespace Mgr\Session;
 
-
-
 /**
  * @class Session
  * @description Handles PHP Session
@@ -28,22 +26,21 @@ class Session {
      */
     private $namespace;
 
-    
-    
     /**
      * @name Constructor   
      * @description Does the construction job
      * @param type {Sring} $namespace - the PHP session namespace
      */
-    
     public function __construct($namespace) {
-        $this->namespace=$namespace;
+        $this->namespace = $namespace;
         session_name($this->namespace);
         ob_start();
-        if (!session_start()) 
-            throw new \Mgr\Exception\Session("Session did not initialized");
+        if (session_status() !== PHP_SESSION_ACTIVE) {
+            if (!session_start())
+                throw new \Mgr\Exception\Session("Session did not initialized");
+        }
     }
-    
+
     /**
      * 
      * @name getSessionNamespace
@@ -51,13 +48,10 @@ class Session {
      * 
      * @return sting
      */
-    
-    public function getSessionNamespace(){
+    public function getSessionNamespace() {
         return $this->namespace;
     }
-    
-    
-    
+
     /**
      * @name set   
      * @description set a key value pair to session
@@ -67,15 +61,13 @@ class Session {
      * 
      * @return Boolean
      */
-    public function set($key, $value){
-        $_SESSION[$key]= $value;
-        if($_SESSION[$key])
+    public function set($key, $value) {
+        $_SESSION[$key] = $value;
+        if ($_SESSION[$key])
             return true;
         return false;
     }
-    
-    
-    
+
     /**
      * @name get   
      * @description returns the requested session key, value
@@ -84,16 +76,12 @@ class Session {
      * 
      * @return {mixed} string if value exists ot false when key does not existe
      */
-    
-    
-    public function get($key){
-        if(isset($_SESSION[$key]))
-          return $_SESSION[$key];
+    public function get($key) {
+        if (isset($_SESSION[$key]))
+            return $_SESSION[$key];
         return false;
     }
-    
-    
-    
+
     /**
      * @name regenerateId   
      * @description regenerates session id
@@ -102,32 +90,25 @@ class Session {
      * 
      * @return {mixed} string if value exists ot false when key does not existe
      */
-    
-    
-    public function regenerateId($key){
+    public function regenerateId($key) {
         return session_regenerate_id();
     }
-    
-    
+
     /**
      * @name destroy   
      * @description destroy session by name
      *
      * @return void
      */
-    
-    public function destroy(){
+    public function destroy() {
         return session_destroy();
     }
-    
-    
-    
+
     /**
      * @name destruction   
      * @description does the destruction job
      *
      */
-    
     public function __destruct() {
         session_write_close();
     }
