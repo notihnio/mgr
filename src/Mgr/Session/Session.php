@@ -32,13 +32,15 @@ class Session {
      * @param type {Sring} $namespace - the PHP session namespace
      */
     public function __construct($namespace) {
+        ob_start();
         $this->namespace = $namespace;
         session_name($this->namespace);
-        ob_start();
         if (session_status() !== PHP_SESSION_ACTIVE) {
             if (!session_start())
                 throw new \Mgr\Exception\Session("Session did not initialized");
         }
+        ob_get_clean();
+
     }
 
     /**
