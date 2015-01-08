@@ -28,7 +28,7 @@ https://github.com/notihnio/mgr-example-application
 
 
 <b>What's new:</b> 
-
+version <b>1.5.4</b> fixing output buffer minor bug on session  <br>
 version <b>1.4.2</b> Fixing Get parameters issue on routing  <br>
 version <b>1.4.1</b> adding support to XCache <br>
 version <b>1.4.0</b> adding support to Memcache and APC cache <br>
