@@ -103,12 +103,13 @@ class Core {
             if(file_exists(ROOT.DIRECTORY_SEPARATOR."Application".DIRECTORY_SEPARATOR."Module".DIRECTORY_SEPARATOR.ucfirst($this->selectedRoute["module"]).DIRECTORY_SEPARATOR."Bootstrap.php")){ 
                 $bootstrapClass = $selectedRouteNamespace."\\Bootstrap";
                 // execute go 
-                \Mgr\Event\Event::trigger("module.preDispach");
                 $bootstrapClass::go();
-                \Mgr\Event\Event::trigger("module.postDispach");
+               
             }
             
+            \Mgr\Event\Event::trigger("module.preDispach");               
             $controller->$selectedAction();
+            \Mgr\Event\Event::trigger("module.postDispach");
         } catch (\Exception $error) {
             $error->getMessage();
         } catch (\Mgr\Exception\Route $error) {
