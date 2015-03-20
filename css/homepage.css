@@ -1,0 +1,165 @@
+/**
+ * Eric Meyer's Reset CSS v2.0 (http://meyerweb.com/eric/tools/css/reset/)
+ * http://cssreset.com
+ */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline; }
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block; }
+
+body {
+  line-height: 1; }
+
+ol, ul {
+  list-style: none; }
+
+blockquote, q {
+  quotes: none; }
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none; }
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+a, a:visited, a:hover {
+  text-decoration: none; }
+
+.clearfix:before,
+.clearfix:after,
+.row:before,
+.row:after {
+  content: '\0020';
+  display: block;
+  overflow: hidden;
+  visibility: hidden;
+  width: 0;
+  height: 0; }
+
+.row:after,
+.clearfix:after {
+  clear: both; }
+
+.row,
+.clearfix {
+  zoom: 1; }
+
+/* You can also use a <br class="clear" /> to clear columns */
+.clear {
+  clear: both;
+  display: block;
+  overflow: hidden;
+  visibility: hidden;
+  width: 0;
+  height: 0; }
+
+body {
+  font-family: "Roboto", sans-serif;
+  color: #3c3c3c;
+  font-size: 14px; }
+
+.fullPageWrapper {
+  width: 100%; }
+
+.wrapper {
+  width: 96%;
+  max-width: 1024px;
+  margin: 0 auto; }
+
+h1 {
+  font-size: 30px; }
+
+#header {
+  height: 50px;
+  background-color: #af4d4d; }
+  #header .wrapper {
+    display: table;
+    height: 50px; }
+    #header .wrapper .logo {
+      display: table-cell;
+      vertical-align: middle; }
+      #header .wrapper .logo img {
+        height: 40px; }
+    #header .wrapper nav {
+      display: table-cell;
+      vertical-align: middle; }
+      #header .wrapper nav ul {
+        float: right; }
+        #header .wrapper nav ul li {
+          float: left;
+          margin-left: 20px; }
+          #header .wrapper nav ul li a {
+            color: #fff;
+            font-size: 16px; }
+
+.topContent {
+  background-color: #c8c8c8;
+  box-sizing: border-box;
+  padding: 80px 0; }
+  .topContent .wrapper {
+    display: table;
+    table-layout: fixed; }
+    .topContent .wrapper .topContentInner {
+      display: table-cell;
+      width: 50%;
+      vertical-align: middle; }
+    .topContent .wrapper .topContentInner:first-child {
+      width: 30%; }
+      .topContent .wrapper .topContentInner:first-child img {
+        width: 100%;
+        max-width: 300px; }
+    .topContent .wrapper .topContentInner:last-child {
+      box-sizing: border-box;
+      padding-left: 5%;
+      width: 60%;
+      line-height: 1.3em;
+      vertical-align: top;
+      font-size: 20px; }
+      .topContent .wrapper .topContentInner:last-child span {
+        display: block;
+        margin-top: 20px; }
+
+/* Tablet Portrait size to standard 960 (devices and browsers) */
+/* All Mobile Sizes (devices and browser) */
+@media only screen and (max-width: 767px) {
+  h1 {
+    font-size: 24px !important; }
+
+  .topContentInner {
+    float: left !important;
+    width: 100% !important; }
+
+  .topContentInner:first-child {
+    text-align: center !important; }
+    .topContentInner:first-child img {
+      width: 70% !important; }
+
+  .topContentInner:last-child {
+    font-size: 16px !important;
+    padding-top: 40px !important; } }
+/* Mobile Portrait Size to Mobile Landscape Size (devices and browsers) */
+
+/*# sourceMappingURL=homepage.css.map */

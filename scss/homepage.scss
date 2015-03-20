@@ -1,0 +1,86 @@
+@import 'reset';
+@import 'base';
+@import 'header';
+
+.topContent{
+    background-color: #c8c8c8;
+    box-sizing: border-box;
+    padding: 80px 0;
+    
+    .wrapper{
+        display: table;
+        table-layout: fixed;
+        
+        .topContentInner{
+            display: table-cell;
+            width:50%;
+            vertical-align: middle;
+            
+        }
+        
+         .topContentInner:first-child{
+            width:30%;
+            
+            img{
+                width: 100%;
+                max-width: 300px;
+            }
+            
+        }
+        
+        .topContentInner:last-child{
+            box-sizing: border-box;
+            padding-left: 5%;
+            width:60%;
+            line-height: 1.3em;
+            vertical-align: top;
+            font-size: 20px;
+            
+            span{
+                display: block;
+                margin-top: 20px;
+            }
+        }
+        
+        
+    }
+}
+
+
+/* Tablet Portrait size to standard 960 (devices and browsers) */
+@media only screen  and (max-width: 959px) {
+    
+}
+
+/* All Mobile Sizes (devices and browser) */    
+@media only screen and (max-width: 767px) {
+    h1{
+        font-size: 24px !important;
+    }
+    
+    
+    .topContentInner{
+        float: left !important;
+        width: 100% !important;
+    }
+    
+    .topContentInner:first-child{
+        text-align: center !important;
+        
+        img{
+            width:70% !important;
+        }
+    }
+    
+    .topContentInner:last-child{
+        font-size:16px !important;
+        padding-top: 40px !important;
+    }
+    
+    
+}
+
+
+
+/* Mobile Portrait Size to Mobile Landscape Size (devices and browsers) */
+@media only screen and (max-width: 479px) {}

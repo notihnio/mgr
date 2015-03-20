@@ -1,0 +1,26 @@
+$font-size:14px;
+$font-family: 'Roboto', sans-serif;
+$font-color: #3c3c3c;
+$width:1024px;
+$menu-font-size:16px;
+
+body{
+    font-family: $font-family;
+    color:$font-color;
+    font-size: $font-size;
+}
+
+
+.fullPageWrapper{
+    width:100%;
+}
+
+.wrapper{
+    width:96%;
+    max-width: $width;
+    margin: 0 auto;
+}
+
+h1{
+    font-size: 30px;
+}

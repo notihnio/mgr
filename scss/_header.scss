@@ -1,0 +1,37 @@
+#header{
+    height: 50px;
+    background-color: #af4d4d;
+    
+    .wrapper{
+        display: table;
+        height:50px;
+        
+        .logo{
+            display: table-cell;
+            vertical-align: middle;
+            
+            img{
+                height: 40px;
+            }
+        }
+        
+        nav{
+            display: table-cell;
+            vertical-align: middle;
+            
+            ul{
+                float:right;
+                
+                li{
+                    float: left;
+                    margin-left: 20px;
+                 
+                    a{
+                        color:#fff;
+                        font-size: $menu-font-size;
+                    }
+                }
+            }
+        }
+    }
+}
