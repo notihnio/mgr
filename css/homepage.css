@@ -79,7 +79,8 @@ a, a:visited, a:hover {
 body {
   font-family: "Roboto", sans-serif;
   color: #3c3c3c;
-  font-size: 14px; }
+  font-size: 14px;
+  background-color: #efebeb; }
 
 .fullPageWrapper {
   width: 100%; }
@@ -158,6 +159,24 @@ h1 {
         display: block;
         margin-top: 20px; }
 
+.midContent {
+  box-sizing: border-box;
+  padding: 80px 0; }
+  .midContent .wrapper {
+    display: table; }
+  .midContent .midContentInner {
+    display: table-cell;
+    vertical-align: bottom;
+    text-align: center; }
+    .midContent .midContentInner span.midContentImage {
+      display: block;
+      text-align: center; }
+    .midContent .midContentInner span.midContentText {
+      color: #af4d4d;
+      font-size: 18px;
+      margin-top: 30px;
+      display: block; }
+
 /* Tablet Portrait size to standard 960 (devices and browsers) */
 /* All Mobile Sizes (devices and browser) */
 @media only screen and (max-width: 767px) {
@@ -175,7 +194,15 @@ h1 {
 
   .topContentInner:last-child {
     font-size: 16px !important;
-    padding-top: 40px !important; } }
+    padding-top: 40px !important; }
+
+  .midContentInner {
+    width: 100%;
+    float: left;
+    margin-top: 60px; }
+
+  .midContentInner:first-child {
+    margin-top: 0 !important; } }
 /* Mobile Portrait Size to Mobile Landscape Size (devices and browsers) */
 
 /*# sourceMappingURL=homepage.css.map */

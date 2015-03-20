@@ -3,11 +3,13 @@ $font-family: 'Roboto', sans-serif;
 $font-color: #3c3c3c;
 $width:1024px;
 $menu-font-size:16px;
+$body-color: #efebeb;
 
 body{
     font-family: $font-family;
     color:$font-color;
     font-size: $font-size;
+    background-color: $body-color;
 }
 
 
