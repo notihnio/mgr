@@ -5,6 +5,7 @@
     .wrapper{
         display: table;
         height:50px;
+        position:relative;
         
         .logo{
             display: table-cell;
@@ -35,3 +36,39 @@
         }
     }
 }
+
+.mobilemenu{
+    position: absolute;
+    right: 0;
+    top:0;
+    display: none;
+    
+}
+
+
+/* Tablet Portrait size to standard 960 (devices and browsers) */
+@media only screen  and (max-width: 959px) {
+    
+}
+
+/* All Mobile Sizes (devices and browser) */    
+@media only screen and (max-width: 767px) {
+    .mobilemenu{
+        display: block !important;
+    }
+    
+    #header{
+        .wrapper{
+            nav{
+                ul{
+                 display: none !important;
+                }
+            }
+        }
+    }    
+}
+
+
+
+/* Mobile Portrait Size to Mobile Landscape Size (devices and browsers) */
+@media only screen and (max-width: 479px) {}
