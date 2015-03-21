@@ -80,7 +80,8 @@ body {
   font-family: "Roboto", sans-serif;
   color: #3c3c3c;
   font-size: 14px;
-  background-color: #efebeb; }
+  background-color: #efebeb;
+  line-height: 1.3em; }
 
 .fullPageWrapper {
   width: 100%; }
@@ -92,6 +93,12 @@ body {
 
 h1 {
   font-size: 30px; }
+
+h2 {
+  font-size: 28px; }
+
+h3 {
+  font-size: 20px; }
 
 #header {
   height: 50px;
@@ -132,6 +139,30 @@ h1 {
   #header .wrapper nav ul {
     display: none !important; } }
 /* Mobile Portrait Size to Mobile Landscape Size (devices and browsers) */
+footer {
+  height: 60px;
+  display: table;
+  background-color: #494949;
+  position: relative; }
+  footer .footerInner {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    color: #fff; }
+  footer .socialMedia {
+    position: absolute;
+    right: 0;
+    top: 15px; }
+    footer .socialMedia a {
+      display: inline-block;
+      margin-right: 10px; }
+    footer .socialMedia img {
+      height: 30px; }
+
+/* All Mobile Sizes (devices and browser) */
+@media only screen and (max-width: 767px) {
+  .footerInner {
+    text-align: left !important; } }
 .topContent {
   background-color: #c8c8c8;
   box-sizing: border-box;
@@ -152,9 +183,9 @@ h1 {
       box-sizing: border-box;
       padding-left: 5%;
       width: 60%;
-      line-height: 1.3em;
       vertical-align: top;
-      font-size: 20px; }
+      font-size: 20px;
+      line-height: 1.3em; }
       .topContent .wrapper .topContentInner:last-child span {
         display: block;
         margin-top: 20px; }
@@ -176,6 +207,48 @@ h1 {
       font-size: 18px;
       margin-top: 30px;
       display: block; }
+
+.bottomContent {
+  box-sizing: border-box;
+  padding: 100px 0; }
+  .bottomContent .bottomContentInner {
+    width: 50%;
+    float: left;
+    box-sizing: border-box;
+    padding: 0 2% 0 0; }
+    .bottomContent .bottomContentInner .feature {
+      width: 100%;
+      float: left;
+      display: table;
+      table-layout: fixed;
+      margin-top: 50px; }
+      .bottomContent .bottomContentInner .feature .featureContent:first-child {
+        display: table-cell;
+        vertical-align: bottom;
+        width: 80px;
+        text-aling: center; }
+        .bottomContent .bottomContentInner .feature .featureContent:first-child img {
+          width: 90%; }
+      .bottomContent .bottomContentInner .feature .featureContent:last-child {
+        box-sizing: border-box;
+        padding-left: 10px;
+        display: table-cell;
+        vertical-align: top; }
+        .bottomContent .bottomContentInner .feature .featureContent:last-child h3 {
+          font-weight: 300; }
+        .bottomContent .bottomContentInner .feature .featureContent:last-child span {
+          display: block;
+          margin-top: 10px; }
+    .bottomContent .bottomContentInner .feature:first-child {
+      margin-top: 60px !important; }
+    .bottomContent .bottomContentInner .news {
+      margin-top: 50px; }
+    .bottomContent .bottomContentInner .newsArticle {
+      margin-top: 62px;
+      font-size: 15px; }
+      .bottomContent .bottomContentInner .newsArticle span {
+        font-weight: bold;
+        color: #af4d4d; }
 
 /* Tablet Portrait size to standard 960 (devices and browsers) */
 /* All Mobile Sizes (devices and browser) */
@@ -202,7 +275,17 @@ h1 {
     margin-top: 60px; }
 
   .midContentInner:first-child {
-    margin-top: 0 !important; } }
+    margin-top: 0 !important; }
+
+  .bottomContent {
+    padding: 40px 0; }
+    .bottomContent .bottomContentInner {
+      width: 100%; }
+      .bottomContent .bottomContentInner h2 {
+        display: block;
+        text-align: center; }
+    .bottomContent .bottomContentInner:last-child {
+      margin-top: 60px; } }
 /* Mobile Portrait Size to Mobile Landscape Size (devices and browsers) */
 
 /*# sourceMappingURL=homepage.css.map */

@@ -1,0 +1,40 @@
+footer{
+    height: 60px;
+    display:table;
+    background-color:#494949;
+    position:relative;
+    
+    .footerInner{
+       display: table-cell;
+       vertical-align: middle;
+       text-align: center;
+       color:#fff;
+    }
+    
+    
+    .socialMedia{
+        position: absolute;
+        right: 0;
+        top:15px;;
+        
+        a{
+            display: inline-block;
+            margin-right: 10px;
+        }
+        img{
+            height: 30px;
+        }
+    }
+}
+
+
+
+
+/* All Mobile Sizes (devices and browser) */    
+@media only screen and (max-width: 767px) {
+    
+    .footerInner{
+        text-align: left !important;
+        
+    }
+}
