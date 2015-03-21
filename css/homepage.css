@@ -137,7 +137,22 @@ h3 {
     display: block !important; }
 
   #header .wrapper nav ul {
-    display: none !important; } }
+    display: none !important; }
+  #header .wrapper nav ul.visible {
+    display: block !important;
+    position: absolute;
+    z-index: 999;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 25px;
+    background-color: #af4d4d;
+    width: 100%; }
+    #header .wrapper nav ul.visible li {
+      width: 100%;
+      text-align: center;
+      margin: 10px 0; } }
 /* Mobile Portrait Size to Mobile Landscape Size (devices and browsers) */
 footer {
   height: 60px;

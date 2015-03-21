@@ -1,3 +1,6 @@
-$(".mobilemenu").click(function(){
-   $(".nav ul").toggleClass("visible"); 
+$(function () {
+    $(".mobilemenu").click(function () {
+        $("nav ul").toggleClass("visible");
+    });
+
 });
