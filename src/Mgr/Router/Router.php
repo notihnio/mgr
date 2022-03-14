@@ -244,7 +244,8 @@ class Router {
      *
      * @return array Controller Module Action and url params
      */
-    public function getNormalRouterParams(string $requestedPathRegex, string $routerRegex, array $route) {
+    public function getNormalRouterParams(string $requestedPathRegex, string $routerRegex, array $route): array
+    {
         //get static part of route  /article/:article_id => /article/
         $staticPartOfTheRoute = preg_replace("/:.{0,}/", "", $route["route"]);
 
@@ -275,7 +276,7 @@ class Router {
     /**
      * @return array|bool|void
      */
-    public function dispach()
+    public function dispatch()
     {
 
         if ($this->normalRouter()) {

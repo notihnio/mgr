@@ -76,17 +76,17 @@ class Core {
     /**
      * @return void
      */
-    public function dispach() : void
+    public function dispatch() : void
     {
         try {
 
             //init Router
             $router = new \Mgr\Router\Router($this->routes, $this->configuration);
 
-            //dispach router
-            \Mgr\Event\Event::trigger("router.preDispach");
-            $this->selectedRoute = $router->dispach();
-            \Mgr\Event\Event::trigger("router.postDispach", $this->selectedRoute);
+            //dispatch router
+            \Mgr\Event\Event::trigger("router.preDispatch");
+            $this->selectedRoute = $router->dispatch();
+            \Mgr\Event\Event::trigger("router.postDispatch", $this->selectedRoute);
 
             //create selected route namespace
             $selectedRouteNamespace = "\Application\Module\\" . ucfirst($this->selectedRoute["module"]);
@@ -112,9 +112,9 @@ class Core {
 
             }
 
-            \Mgr\Event\Event::trigger("module.preDispach");
+            \Mgr\Event\Event::trigger("module.preDispatch");
             $controller->$selectedAction();
-            \Mgr\Event\Event::trigger("module.postDispach");
+            \Mgr\Event\Event::trigger("module.postDispatch");
         } catch (\Exception $error) {
             $error->getMessage();
         } catch (\Mgr\Exception\Route $error) {
