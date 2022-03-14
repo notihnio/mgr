@@ -73,11 +73,11 @@ class Router {
         
         //if is / then return defaults
         if ($this->requestedPath === "/") {
-            return array(
+            return [
                 "module" => $defaultModule,
                 "controller" => $defaultController,
                 "action" => $defaultAction
-            );
+            ];
         }
 
         $requestedPath = trim($this->requestedPath, "/");
@@ -94,47 +94,47 @@ class Router {
 
         // if path  = /
         if ($paramsNum === 0) {
-            return array(
+            return [
                 "module" => $defaultModule,
                 "controller" => $defaultController,
                 "action" => $defaultAction
-            );
+            ];
         }
 
 
         // is one param
         if ($paramsNum === 1) {
-            return array(
+            return [
                 "module" => $explodedPathElements[0],
                 "controller" => $defaultController,
                 "action" => $defaultAction
-            );
+            ];
         }
 
         // is one param
         if ($paramsNum === 2) {
-            return array(
+            return [
                 "module" => $explodedPathElements[0],
                 "controller" => $explodedPathElements[1],
                 "action" => $defaultAction
-            );
+            ];
         }
 
         if ($paramsNum === 3) {
-            return array(
+            return [
                 "module" => $explodedPathElements[0],
                 "controller" => $explodedPathElements[1],
                 "action" => $explodedPathElements[2]
-            );
+            ];
         }
 
 
         if ($paramsNum >= 4) {
-            $router = array(
+            $router = [
                 "module" => $explodedPathElements[0],
                 "controller" => $explodedPathElements[1],
                 "action" => $explodedPathElements[2],
-            );
+            ];
 
             //remove controller module action params
             unset($explodedPathElements[0], $explodedPathElements[1], $explodedPathElements[2]);
@@ -200,12 +200,12 @@ class Router {
                 else {
                     //check if requested uri regex starts with the router regex
                      if (preg_match("/^" . str_replace("/", "\\/", rtrim($routerRegexStaticPart, "/*")) . ".*/", $this->requestedPath)) {
-                        return array(
+                        return [
                             "module" => strtolower($route["module"]),
                             "controller" => strtolower($route["controller"]),
                             "action" => strtolower($route["action"]),
                             "params" => $this->getNormalRouterParams($requestedPathRegex, $routerRegex, $route)
-                        );
+                        ];
                     }
                 }
 
@@ -227,7 +227,7 @@ class Router {
     public function getDefaultRouterURIParams(array $paramsArray): array
     {
 
-        $params = array();
+        $params = [];
 
         for ($counter = 0, $counterMax = count($paramsArray); $counter < $counterMax; $counter+=2) {
             $params[$paramsArray[$counter]] = ($paramsArray[$counter + 1] ?? null);
@@ -256,7 +256,7 @@ class Router {
         $routeParams = explode("/", preg_replace("/" . str_replace("/", "\\/", $staticPartOfTheRoute) . "/", "", $route["route"], 1));
 
         //stores the exported parameters
-        $params = array();
+        $params = [];
 
         //for each route param
         for ($counter = 0, $counterMax = count($routeParams); $counter < $counterMax; $counter++) {
