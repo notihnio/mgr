@@ -27,25 +27,29 @@ class Router {
      *
      * @var array the routes configuration
      */
-    private $routes = array();
+    private array $routes = [];
 
     /**
      *
      * @var array the system configuration
      */
-    private $configuration;
+    private array $configuration;
 
     /**
-     * 
-     * @param array $routes 
+     *
+     * @param array $routes
      * @param array $configuration
+     *
+     * @throws \Mgr\Exception\Router
      */
     public function __construct($routes, $configuration) {
-        if(!isset($routes))
+        if(!isset($routes)) {
             throw new \Mgr\Exception\Router("You new to specify a Routes array! If you use the default router please provide an empty array");
+        }
 
-        if(!isset($configuration))
-             throw new \Mgr\Exception\Router("You new to specify a configuration array. Else please provide an empty array ");
+        if(!isset($configuration)) {
+            throw new \Mgr\Exception\Router("You new to specify a configuration array. Else please provide an empty array ");
+        }
 
         $this->configuration = $configuration;
         $this->requestedPath = str_replace("index.php","",$_SERVER["REQUEST_URI"]); 
@@ -53,27 +57,28 @@ class Router {
     }
 
     /**
-     * @name defaultRouter
+     * @return array|bool array
      * @description handles default Routing Logic
-     * 
-     * @return type array
+     *
      */
-    public function defaultRouter() {
-        $defaultModule = (isset($this->configuration["defaults"]["module"])) ? $this->configuration["defaults"]["module"] : "index";
-        $defaultController = (isset($this->configuration["defaults"]["controller"])) ? $this->configuration["defaults"]["controller"] : "index";
-        $defaultAction = (isset($this->configuration["defaults"]["action"])) ? $this->configuration["defaults"]["action"] : "index";
+    public function defaultRouter(): array|bool
+    {
+        $defaultModule = $this->configuration["defaults"]["module"] ?? "index";
+        $defaultController = $this->configuration["defaults"]["controller"] ?? "index";
+        $defaultAction = $this->configuration["defaults"]["action"] ?? "index";
         
         //check for get parameters
         $requestedPathExpodes = explode("?", $this->requestedPath);
         $this->requestedPath = $requestedPathExpodes[0];
         
         //if is / then return defaults
-        if ($this->requestedPath == "/")
+        if ($this->requestedPath === "/") {
             return array(
                 "module" => $defaultModule,
                 "controller" => $defaultController,
                 "action" => $defaultAction
             );
+        }
 
         $requestedPath = trim($this->requestedPath, "/");
 
@@ -88,36 +93,40 @@ class Router {
         $explodedPathElements = array_values($explodedPathElements);
 
         // if path  = /
-        if ($paramsNum == 0)
+        if ($paramsNum === 0) {
             return array(
                 "module" => $defaultModule,
                 "controller" => $defaultController,
                 "action" => $defaultAction
             );
+        }
 
 
         // is one param
-        if ($paramsNum == 1)
+        if ($paramsNum === 1) {
             return array(
                 "module" => $explodedPathElements[0],
                 "controller" => $defaultController,
                 "action" => $defaultAction
             );
+        }
 
         // is one param
-        if ($paramsNum == 2)
+        if ($paramsNum === 2) {
             return array(
                 "module" => $explodedPathElements[0],
                 "controller" => $explodedPathElements[1],
                 "action" => $defaultAction
             );
+        }
 
-        if ($paramsNum == 3)
+        if ($paramsNum === 3) {
             return array(
                 "module" => $explodedPathElements[0],
                 "controller" => $explodedPathElements[1],
                 "action" => $explodedPathElements[2]
             );
+        }
 
 
         if ($paramsNum >= 4) {
@@ -128,9 +137,7 @@ class Router {
             );
 
             //remove controller module action params
-            unset($explodedPathElements[0]);
-            unset($explodedPathElements[1]);
-            unset($explodedPathElements[2]);
+            unset($explodedPathElements[0], $explodedPathElements[1], $explodedPathElements[2]);
 
             //reset array keys
             $explodedPathElements = array_values($explodedPathElements);
@@ -142,12 +149,12 @@ class Router {
     }
 
     /**
-     * @name normalRouter
+     * @return bool|array
      * @description handles normal Routing Logic
-     * 
-     * @return type array
+     *
      */
-    public function normalRouter() {
+    public function normalRouter(): bool|array
+    {
 
         //if there are no routes
         if (count($this->routes) <= 0)
@@ -164,12 +171,12 @@ class Router {
 
 
             // check only in normal routes
-            if (strtolower($route["type"]) == "normal") {
+            if (strtolower($route["type"]) === "normal") {
 
                 //replace all variables ("/:variableName") from router routes with - and trim first and last slash so the form of the route no is article/- article/-/- etc
                 $routerRegex = trim(preg_replace("/\/:[a-zA-Z0-9_-]{0,}/", "/-", $route["route"]), "/");
                 
-                //exlode  category/post/-/* to /category/post
+                //explode  category/post/-/* to /category/post
                 $routerRegexParts = explode("/-", $routerRegex);
                 $routerRegexStaticPart = "/".$routerRegexParts[0];
              
@@ -180,12 +187,12 @@ class Router {
                     if (preg_match("/^" . str_replace("/", "\\/", rtrim($routerRegexStaticPart, "/*")) . ".*/", $this->requestedPath)) {
 
 
-                        return array(
+                        return [
                             "module" => strtolower($route["module"]),
                             "controller" => strtolower($route["controller"]),
                             "action" => strtolower($route["action"]),
                             "params" => $this->getNormalRouterParams($requestedPathRegex, $routerRegex, $route)
-                        );
+                        ];
                     }
                 }
 
@@ -212,18 +219,18 @@ class Router {
     }
 
     /**
-     * @name getDefaultRouterURIParams
      * @description "Returns Url  parameters array form array(paramName => paramValue)"
      *  
      * @param array $paramsArray the parameters array form array("paramname1", "paramvalue1", "paramName2, "paramValue2")
      * @return array
      */
-    public function getDefaultRouterURIParams(array $paramsArray) {
+    public function getDefaultRouterURIParams(array $paramsArray): array
+    {
 
         $params = array();
 
-        for ($counter = 0; $counter < count($paramsArray); $counter+=2) {
-            $params[$paramsArray[$counter]] = (isset($paramsArray[$counter + 1]) ? $paramsArray[$counter + 1] : null);
+        for ($counter = 0, $counterMax = count($paramsArray); $counter < $counterMax; $counter+=2) {
+            $params[$paramsArray[$counter]] = ($paramsArray[$counter + 1] ?? null);
         }
 
         return $params;
@@ -232,11 +239,12 @@ class Router {
     /**
      * 
      * @param string $requestedPathRegex - the requested path regex
-     * @param type $routerRegex the router regex
-     * @param type $route the array with rout configuration
+     * @param string $routerRegex        the router regex
+     * @param array  $route              the array with rout configuration
+     *
      * @return array Controller Module Action and url params
      */
-    public function getNormalRouterParams($requestedPathRegex, $routerRegex, $route) {
+    public function getNormalRouterParams(string $requestedPathRegex, string $routerRegex, array $route) {
         //get static part of route  /article/:article_id => /article/
         $staticPartOfTheRoute = preg_replace("/:.{0,}/", "", $route["route"]);
 
@@ -250,13 +258,13 @@ class Router {
         $params = array();
 
         //for each route param
-        for ($counter = 0; $counter < count($routeParams); $counter++) {
+        for ($counter = 0, $counterMax = count($routeParams); $counter < $counterMax; $counter++) {
             if (preg_match("/:[a-zA-Z0-9_\-]{0,}/", $routeParams[$counter])) {
                 $params[preg_replace("/:/", "", $routeParams[$counter])] = $urlParamsValues["$counter"];
                 unset($urlParamsValues[$counter]);
             }
 
-            if ($routeParams[$counter] == "*") {
+            if ($routeParams[$counter] === "*") {
                 $defaultRouterParams = $this->getDefaultRouterURIParams(array_values($urlParamsValues));
                 return array_merge($params, $defaultRouterParams);
             }
@@ -264,12 +272,19 @@ class Router {
         return $params;
     }
 
-    public function dispach() {
-        if ($this->normalRouter())
-            return $this->normalRouter();
+    /**
+     * @return array|bool|void
+     */
+    public function dispach()
+    {
 
-        if ($this->defaultRouter())
+        if ($this->normalRouter()) {
+            return $this->normalRouter();
+        }
+
+        if ($this->defaultRouter()) {
             return $this->defaultRouter();
+        }
     }
 
 }

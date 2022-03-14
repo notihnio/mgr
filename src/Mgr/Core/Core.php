@@ -27,7 +27,7 @@ class Core {
      * @name $configuration 
      * @description handles the configuration;
      */
-    private $configuration;
+    private array $configuration;
 
     /**
      *
@@ -35,16 +35,17 @@ class Core {
      * @name routes 
      * @description RouterRoutes;
      */
-    private $routes = array();
+    private array $routes = array();
 
     /**
      * @type Array
      * @name $selectedRoute 
      * @description The selected route from route - initialization after router despach;
      */
-    public $selectedRoute = null;
+    public array|null $selectedRoute = null;
 
-    function __construct() {
+
+    public function __construct() {
         $this->configuration = \Application\Config\Configurator::config();   
         
         //check for local route file in module directories
@@ -72,7 +73,11 @@ class Core {
         $this->routes = array_merge($this->routes, \Application\Config\Routes::routes());
     }
 
-    function dispach() {
+    /**
+     * @return void
+     */
+    public function dispach() : void
+    {
         try {
 
             //init Router
@@ -95,19 +100,19 @@ class Core {
             $controller->view = new \Mgr\View\View($controller->viewFolderPath . DIRECTORY_SEPARATOR . ucfirst($this->selectedRoute["action"]));
             $controller->getParams = $_GET;
             $controller->postParams = $_POST;
-            $controller->params = isset($this->selectedRoute["params"]) ? $this->selectedRoute["params"] : array();
+            $controller->params = $this->selectedRoute["params"] ?? [];
             //fire The selected action
             $selectedAction = ucfirst($this->selectedRoute["action"]) . "Action";
 
             //check if module local bootstrap class exists
-            if(file_exists(ROOT.DIRECTORY_SEPARATOR."Application".DIRECTORY_SEPARATOR."Module".DIRECTORY_SEPARATOR.ucfirst($this->selectedRoute["module"]).DIRECTORY_SEPARATOR."Bootstrap.php")){ 
+            if(file_exists(ROOT.DIRECTORY_SEPARATOR."Application".DIRECTORY_SEPARATOR."Module".DIRECTORY_SEPARATOR.ucfirst($this->selectedRoute["module"]).DIRECTORY_SEPARATOR."Bootstrap.php")){
                 $bootstrapClass = $selectedRouteNamespace."\\Bootstrap";
-                // execute go 
+                // execute go
                 $bootstrapClass::go();
-               
+
             }
-            
-            \Mgr\Event\Event::trigger("module.preDispach");               
+
+            \Mgr\Event\Event::trigger("module.preDispach");
             $controller->$selectedAction();
             \Mgr\Event\Event::trigger("module.postDispach");
         } catch (\Exception $error) {

@@ -24,20 +24,23 @@ class Session {
      * @var string
      * @description the session namespace
      */
-    private $namespace;
+    private string $namespace;
 
     /**
-     * @name Constructor   
      * @description Does the construction job
-     * @param type {Sring} $namespace - the PHP session namespace
+     *
+     * @param string $namespace - the PHP session namespace
+     *
+     * @throws \Mgr\Exception\Session
      */
-    public function __construct($namespace) {
+    public function __construct(string $namespace) {
         ob_start();
         $this->namespace = $namespace;
         session_name($this->namespace);
         if (session_status() !== PHP_SESSION_ACTIVE) {
-            if (!session_start())
+            if (!session_start()) {
                 throw new \Mgr\Exception\Session("Session did not initialized");
+            }
         }
         ob_get_clean();
 
@@ -45,64 +48,62 @@ class Session {
 
     /**
      * 
-     * @name getSessionNamespace
      * @description returns the session namespace
      * 
-     * @return sting
+     * @return string
      */
-    public function getSessionNamespace() {
+    public function getSessionNamespace(): string
+    {
         return $this->namespace;
     }
 
     /**
-     * @name set   
      * @description set a key value pair to session
-     * 
-     * @param type {String} $key - the PHP session key
-     * @param type {String} $value - the PHP session value
-     * 
-     * @return Boolean
-     */
-    public function set($key, $value) {
-        $_SESSION[$key] = $value;
-        if ($_SESSION[$key])
-            return true;
-        return false;
-    }
-
-    /**
-     * @name get   
-     * @description returns the requested session key, value
      *
-     * @param type $key - the PHP session key
-     * 
-     * @return {mixed} string if value exists ot false when key does not existe
+     * @param string $key
+     * @param string $value
+     *
+     * @return bool
      */
-    public function get($key) {
-        if (isset($_SESSION[$key]))
-            return $_SESSION[$key];
+    public function set(string $key, string $value): bool
+    {
+        $_SESSION[$key] = $value;
+        if ($_SESSION[$key]) {
+            return true;
+        }
         return false;
     }
 
     /**
-     * @name regenerateId   
+     * @description returns the requested session key, value
+     * @param string $key
+     *
+     * @return mixed
+     */
+    public function get(string $key): mixed
+    {
+        return $_SESSION[$key] ?? false;
+    }
+
+    /**
      * @description regenerates session id
      *
-     * @param type $key - the PHP session key
+     * @param string $key - the PHP session key
      * 
-     * @return {mixed} string if value exists ot false when key does not existe
+     * @return bool
      */
-    public function regenerateId($key) {
+    public function regenerateId(string $key): bool
+    {
         return session_regenerate_id();
     }
 
     /**
-     * @name destroy   
      * @description destroy session by name
      *
-     * @return void
+     * @return bool
      */
-    public function destroy() {
+    public function destroy() : bool
+    {
         return session_destroy();
     }
 

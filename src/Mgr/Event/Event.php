@@ -9,6 +9,7 @@
  
  */
 namespace Mgr\Event;
+
 /**
  * @name Event
  * @description Handles events
@@ -32,29 +33,33 @@ class Event {
      * @var array of events
      * 
      */
-    public static $events = array();
+    public static array $events = [];
 
     /**
      * @name trigger
      * @description triggers an event
+     *
      * @param string $event the name of the event
-     * @param array $args the event passing arguments
+     * @param array  $args  the event passing arguments
      */
-    public static function trigger($event, $args = array()) {
+    public static function trigger(string $event, array $args = []): void
+    {
         if (isset(self::$events[$event])) {
             foreach (self::$events[$event] as $callback) {
-                call_user_func($callback, $args);
+                $callback($args);
             }
         }
     }
 
-     /**
-     * @name bind
+    /**
+     * @param string   $event    the name of the event
+     * @param \Closure $callback the callback function
+     *
      * @description binds an event
-     * @param string $event the name of the event
-     * @param type $callback the callback function
+     *
      */
-    public static function bind($event, \Closure $callback) {
+    public static function bind(string $event, \Closure $callback) : void
+    {
         self::$events[$event][] = $callback;
     }
 

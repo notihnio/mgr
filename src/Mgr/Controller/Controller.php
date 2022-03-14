@@ -12,6 +12,10 @@
 
 namespace Mgr\Controller;
 
+use JetBrains\PhpStorm\Pure;
+use \Mgr\View\View;
+use Mgr\Layout\Layout;
+
 /**
  * @name Controller 
  * @description Handles Mvc Controller Logic
@@ -20,68 +24,68 @@ namespace Mgr\Controller;
 class Controller {
 
     /**
-     * @var \Mgr\View\View View
-     * @description Thes view object
+     * @var View View
+     * @description View object
      * 
      */
-    public $view;
+    public View $view;
 
     /**
-     * @var sting $viewFolderPath
+     * @var string $viewFolderPath
      * @description the view folder path
      * 
      */
-    public $viewFolderPath;
+    public string $viewFolderPath;
 
     /**
      * @var array $selectedRoute
      * @description the router selected route
      * 
      */
-    public $selectedRoute;
+    public array $selectedRoute;
 
     /**
-     * @var \Mgr\Layout\Layout Layout
-     * @description Thes layout objects object
+     * @var Layout Layout
+     * @description Layout object
      * 
      */
-    public $layout;
+    public Layout $layout;
 
     /**
      *
      * @var array $postParams
      * @description handles postParams
      */
-    private $postParams;
+    private array $postParams;
 
     /**
      *
-     * @var array $Params
+     * @var array $params
      * @description handles router params
      */
-    public $params;
+    public array $params;
 
     /**
      *
      * @var array $getParams
      * @description handles post params
      */
-    public $getParams;
+    public array $getParams;
 
-    public function __construct() {
-        $this->layout = new \Mgr\Layout\Layout();
+    #[Pure] public function __construct() {
+        $this->layout = new Layout();
     }
 
     public function __destruct() {
         try {
             if (isset($this->layout->__Name)) {
-                $this->layout->__layoutFilePath = dirname(dirname($this->viewFolderPath)) . DIRECTORY_SEPARATOR . "Layout" . DIRECTORY_SEPARATOR . ucfirst($this->layout->__Name);
+                $this->layout->layoutFilePath = dirname($this->viewFolderPath, 2) . DIRECTORY_SEPARATOR . "Layout" . DIRECTORY_SEPARATOR . ucfirst($this->layout->__Name);
                 $this->layout->content = $this->view->render();
                 $this->layout->render();
             } else {
                 echo $this->view->render();
             }
-        } catch (\Mgr\Exception $error) {
+        } catch (\Exception $error) {
             return;
         }
     }

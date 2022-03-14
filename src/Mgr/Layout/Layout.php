@@ -18,17 +18,26 @@ namespace Mgr\Layout;
  * 
  */
 class Layout {
-   
-    public $__layoutFilePath;
-    
+
+    /**
+     * @var string|mixed|null
+     */
+    public ?string $layoutFilePath;
 
 
-    public function __construct($layoutFilePath = null) {
+    /**
+     * @param string|null $layoutFilePath
+     */
+    public function __construct(?string $layoutFilePath = null) {
         $this->layoutFilePath = $layoutFilePath;
     }
-    
-    public function render(){
-        require_once $this->__layoutFilePath.".php";
+
+    /**
+     * @return void
+     */
+    public function render(): void
+    {
+        require_once $this->layoutFilePath.".php";
     }
         
 }

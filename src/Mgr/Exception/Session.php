@@ -11,6 +11,8 @@
 
 namespace Mgr\Exception;
 
+use JetBrains\PhpStorm\Pure;
+
 /**
  * @class  Mgr\Exception\Session
  * @Description Handles Session handler exception
@@ -18,14 +20,17 @@ namespace Mgr\Exception;
 class Session extends \Exception {
 
     // Redefine the exception so message isn't optional
-    public function __construct($message, $code = 0, Exception $previous = null) {
+    #[Pure] public function __construct(string $message, int $code = 0, \Exception $previous = null) {
         // some code
         // make sure everything is assigned properly
         parent::__construct($message, $code, $previous);
     }
 
-    
-    public function __toString() {
+    /**
+     * @return string
+     */
+    public function __toString() :string
+    {
         return __CLASS__ . ": [{$this->code}]: {$this->message}\n";
     }
 
