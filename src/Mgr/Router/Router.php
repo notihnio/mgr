@@ -161,8 +161,8 @@ class Router {
             return false;
 
         //check for get parameters
-        $requestedPathExpodes = explode("?", $this->requestedPath);
-        $this->requestedPath = $requestedPathExpodes[0];
+        $requestedPathExplodes = explode("?", $this->requestedPath);
+        $this->requestedPath = $requestedPathExplodes[0];
         
         // /article/3 to article/-  
         $requestedPathRegex = preg_replace("/\/[a-zA-Z0-9_-]{0,}/", "/-", trim($this->requestedPath, "/"));
@@ -198,7 +198,7 @@ class Router {
 
                 //if there is no /* route check if requested url regex is the same with the router regex
                 else {
-                    //check if requestd uri regex starts with the router regex
+                    //check if requested uri regex starts with the router regex
                      if (preg_match("/^" . str_replace("/", "\\/", rtrim($routerRegexStaticPart, "/*")) . ".*/", $this->requestedPath)) {
                         return array(
                             "module" => strtolower($route["module"]),
